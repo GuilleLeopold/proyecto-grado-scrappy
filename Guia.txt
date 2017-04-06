@@ -1,0 +1,15 @@
+response.xpath('//h2/text()').extract()[0].replace('Clima ', '') 
+
+table_med = response.xpath('//table[@class="medias mensuales"]//tr')
+
+for tr in table_med:
+    print(tr.xpath('td[1]//text()').extract())
+
+
+# CHEQUEAR QUE LA PAGE NO TIRE NOT FOUND
+# CHEQUEAR DIA X MES (SI VA HASTA 30, 31 O 28)
+# SCRAPEAR MES Y ANIO DESDE LA RESPONSE URL Y LUGAR DESDE EL H2
+# SCRAPEAR TEMP MIN Y MAX DE COLUMNAS 2 Y 3, PRECIPITACIONES DE COLUMNA 5 EN CADA FILA (CODIGO ARRIBA)
+# VALIDAR QUE EL FIELD NO SEA UN GUION (DATO NO DADO)
+# AGREGAR ESTACIONES NUEVAS A LA BASE DE DATOS O BUSCAR CUALES SE ADECUAN
+# UN POCO DE PIPELINE

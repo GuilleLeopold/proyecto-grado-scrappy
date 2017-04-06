@@ -15,7 +15,7 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 import sys
-sys.path.insert(0, '/Users/toptier/Documents/proyecto-de-grado/proyecto-grado-django')
+sys.path.insert(0, '/home/guillermo/Documents/proyecto_de_grado/proyecto-grado-django')
 
 # Setting up django's settings module name.
 # This module is located at /home/rolando/projects/myweb/myweb/settings.py.
@@ -29,7 +29,9 @@ SPIDER_MODULES = ['proyecto_grado_scrapy.spiders']
 NEWSPIDER_MODULE = 'proyecto_grado_scrapy.spiders'
 
 ITEM_PIPELINES = {
-    'proyecto_grado_scrapy.pipelines.ProyectoGradoScrapyPipeline': 1000,
+    'proyecto_grado_scrapy.pipelines.AlturasPipeline': 1000,
+    'proyecto_grado_scrapy.pipelines.PrecipitacionesPipeline': 1000
+    'proyecto_grado_scrapy.pipelines.TuTiempoPipeline': 1000
 }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -37,6 +39,8 @@ ITEM_PIPELINES = {
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+
+
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32

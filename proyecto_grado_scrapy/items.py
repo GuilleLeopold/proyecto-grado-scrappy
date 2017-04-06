@@ -8,12 +8,23 @@
 
 import scrapy
 
-from scrapy_djangoitem import DjangoItem
 from scrapy.item import Field
 
-from scrapy_ute.models import Altura
-
-class AlturaItem(DjangoItem):
+class AlturaItem:
     # define the fields for your item here like:
     # name = scrapy.Field()
-    django_model = Altura
+    altura = scrapy.Field()
+    lugar = scrapy.Field()
+    fecha = scrapy.Field()
+
+class PrecipitacionItem:
+	precipitacion = scrapy.Field()
+	lugar = scrapy.Field()
+	fecha = scrapy.Field()
+
+class TiempoItem:
+	precipitacion = scrapy.Field()
+	temp_maxima = scrapy.Field()
+	temp_minima = scrapy.Field()
+	lugar = scrapy.Field()
+	fecha = scrapy.Field()
