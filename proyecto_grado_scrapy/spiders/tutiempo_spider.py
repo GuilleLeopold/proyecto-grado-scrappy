@@ -34,21 +34,24 @@ def starting_urls():
 class TiempoItemSpider(scrapy.Spider):
     name = "tiempo_tutiempo"
     allowed_domains = ["www.tutiempo.net"]
-    start_urls = [
-        starting_urls
-    ]
+    start_urls = starting_urls()
+    
 
 
     def parse(self, response):
-        lugar = response.xpath('//h2/text()').extract()[0].replace('Clima ', '')     
+        lugar = response.xpath('//h2/text()').extract()[0].replace('Clima ', '').rstrip()     
         table_med = response.xpath('//table[@class="medias mensuales"]//tr')
         table_med.pop(0)
         table_med.pop(len(table_med)-1)
         table_med.pop(len(table_med)-1)
         for tr in table_med:
+            fecha = tr.xpath('td[1]//text()').extract()[0] + '-' + response.url.split('/')[4]
+            tiempo_date = datetime.strptime(fecha, '%d-%m-%Y')
             item = TiempoItem()
-            item['temp_maxima'] = tr.xpath('td[3]//text()').extract()[0].replace('-', '')
+            item['lugar'] = lugar
+            item['fecha'] = tiempo_date
             item['temp_minima'] = tr.xpath('td[4]//text()').extract()[0].replace('-', '') 
+            item['temp_maxima'] = tr.xpath('td[3]//text()').extract()[0].replace('-', '')
             item['precipitacion'] = tr.xpath('td[7]//text()').extract()[0].replace('-', '')
             if bool(item['temp_minima']) & bool(item['temp_maxima']) & bool(item['precipitacion']): 
                 yield item

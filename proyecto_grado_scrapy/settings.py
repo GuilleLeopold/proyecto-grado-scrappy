@@ -30,7 +30,7 @@ NEWSPIDER_MODULE = 'proyecto_grado_scrapy.spiders'
 
 ITEM_PIPELINES = {
     'proyecto_grado_scrapy.pipelines.AlturasPipeline': 1000,
-    'proyecto_grado_scrapy.pipelines.PrecipitacionesPipeline': 1000
+    'proyecto_grado_scrapy.pipelines.PrecipitacionesPipeline': 1000,
     'proyecto_grado_scrapy.pipelines.TuTiempoPipeline': 1000
 }
 
