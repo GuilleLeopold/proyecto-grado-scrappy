@@ -14,7 +14,7 @@ class PrecipitacionesItemSpider(scrapy.Spider):
     name = "precipitaciones_ute"
     allowed_domains = ["www.ute.com.uy"]
     start_urls = [
-        "http://www.ute.com.uy/Novedades/Lluvias/precipitacionesocurridaprevisiondeniveles.htm"
+        "http://www.ute.com.uy/SgePublico/ConsSATPrecipitaciones.aspx"
     ]
 
     def parse(self, response):
@@ -25,17 +25,19 @@ class PrecipitacionesItemSpider(scrapy.Spider):
         for fila in fila_lugares:
             lugares.append(fila.extract())
 
-        fila_precipitaciones = response.xpath("//table[@id = 'ctl00_ContentPlaceHolder1_gridPrecipTotales']//tr[1]/td/font/text()")
+        fila_precipitaciones = response.xpath("//table[@id = 'ctl00_ContentPlaceHolder1_gridPrecipTotales']//tr[2]/td/font/b/text()")
+        fecha = response.xpath("//table[@id = 'ctl00_ContentPlaceHolder1_gridPrecip']//tr[2]/td/font/text()")[0].extract()
+        
+        precipitacion_date = datetime.strptime(fecha, '%d/%m/%Y')
         precipitaciones = []
+
         for fila in fila_precipitaciones:
             precipitaciones.append(fila.extract())
-
+        
         for index, lugar in enumerate(lugares):
-            precipitacion_date = datetime.strptime(precipitaciones[0], '%d/%m/%Y')
-
             if index != 0 and index != 1:
                 item = PrecipitacionItem()
-                item['lugar'] = lugar.replace('(mm)','')
+                item['lugar'] = lugar.replace(' (mm)','')
                 item['fecha'] = precipitacion_date
                 try:
                     item['precipitacion'] = float(precipitaciones[index].replace(',','.'))
